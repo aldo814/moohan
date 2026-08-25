@@ -84,8 +84,8 @@ function Contact({ dictionary }) {
     attachments.forEach((file) => body.append('attachments[]', file))
 
     try {
-      const response = await fetch('/api/contact.php', { method: 'POST', body })
-      const result = await response.json()
+      const response = await fetch('/api/contact', { method: 'POST', body })
+      const result = await response.json().catch(() => ({}))
 
       if (!response.ok || !result.success) {
         throw new Error(result.message || dictionary.error)
