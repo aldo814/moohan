@@ -1,0 +1,396 @@
+@use '../variables' as *;
+
+.contact {
+  position: relative;
+  width: 100%;
+  padding: 240px 0 200px;
+  overflow: hidden;
+  background: $color-white;
+  color: $color-black;
+
+  &__decoration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 540px;
+    height: 586px;
+    max-width: none;
+  }
+
+  &__inner {
+    --inner-width: 1580px;
+    display: flex;
+    gap: 8.8608%;
+  }
+
+  &__intro {
+    align-self: start;
+    min-width: 0;
+    flex: 0 1 31.6456%;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 92px;
+    white-space: nowrap;
+  }
+
+  &__description {
+    width: 80.6%;
+    margin: 40px 0 0;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+  }
+
+  &__form {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: start;
+    margin-top: 300px;
+    gap: 48px;
+  }
+
+  &__row {
+    display: flex;
+    width: 100%;
+    gap: 40px;
+
+    > .contact__field { min-width: 0; flex: 1 1 0; }
+  }
+
+  &__field {
+    display: grid;
+    width: 100%;
+    height: 61px;
+    grid-template: 1fr / 1fr;
+    border-bottom: 1px dashed #acacac;
+
+    > span,
+    input,
+    textarea,
+    small {
+      grid-area: 1 / 1;
+    }
+
+    > span {
+      z-index: 1;
+      align-self: start;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 36px;
+      pointer-events: none;
+      transition: opacity 120ms ease;
+
+      b { color: #f98d1e; font: inherit; }
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      height: 60px;
+      padding: 0 0 24px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: $color-black;
+      font-family: $font-primary;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 36px;
+    }
+
+    textarea { overflow: hidden; resize: none; }
+
+    &:focus-within > span,
+    &:has(input:not(:placeholder-shown)) > span,
+    &:has(textarea:not(:placeholder-shown)) > span { opacity: 0; }
+
+    &:focus-within { border-bottom-color: #f98d1e; }
+
+    &--message {
+      height: auto;
+      min-height: 61px;
+
+      textarea {
+        height: 60px;
+        min-height: 60px;
+      }
+    }
+
+  }
+
+  &__attachment {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  &__attachment-title {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+  }
+
+  &__attachment-header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  &__attachment-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &__attachment-dropzone {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 200px;
+    padding: 40px 24px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #acacac;
+    border-radius: 4px;
+    background: #f9f9f9;
+    cursor: pointer;
+    gap: 8px;
+    transition: border-color 160ms ease, background-color 160ms ease;
+
+    &--active {
+      border-color: #f98d1e;
+      background: #fff8f1;
+    }
+  }
+
+  &__attachment-upload-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  &__attachment-guide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+
+    p {
+      margin: 0;
+      color: #666;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    p + p { color: #959595; }
+  }
+
+  &__attachment-files {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__attachment-controls {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+  }
+
+  &__attachment-status {
+    display: flex;
+    min-width: 0;
+    min-height: 48px;
+    align-items: center;
+    padding: 6px 20px;
+    flex: 1 1 0;
+    overflow: hidden;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    background: $color-white;
+    color: #959595;
+    font-size: 16px;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__attachment-file {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 16px 6px 20px;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    background: $color-white;
+    gap: 16px;
+
+    > span {
+      overflow: hidden;
+      font-size: 16px;
+      line-height: 24px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    button {
+      display: grid;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      flex: 0 0 24px;
+      border: 0;
+      border-radius: 50%;
+      background: $color-black;
+      cursor: pointer;
+      place-items: center;
+
+      img { width: 16px; height: 16px; }
+    }
+  }
+
+  &__attachment-button {
+    display: flex;
+    width: 120px;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    flex: 0 0 120px;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    background: #f5f5f5;
+    color: #666;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  &__attachment:focus-within &__attachment-button {
+    outline: 2px solid #f98d1e;
+    outline-offset: 3px;
+  }
+
+  &__submit {
+    display: flex;
+    width: 220px;
+    height: 72px;
+    align-items: center;
+    justify-content: center;
+    margin-top: -8px;
+    padding: 0;
+    border-radius: 60px;
+    background: #f98d1e;
+    color: $color-white;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+  }
+
+  &__feedback {
+    margin: 0;
+    font-size: 16px;
+    line-height: 26px;
+
+    &--success { color: #087a3e; }
+    &--error { color: #c52c2c; }
+  }
+}
+
+@media (max-width: 1024px) {
+  .contact {
+    min-height: 59.375rem;
+    padding: 7.5rem 0 7.5rem 0;
+
+    &__decoration { display: none; }
+
+    &__inner {
+      display: block;
+      max-width: none;
+    }
+
+    &__title {
+      font-size: 2.5rem;
+      line-height: 3.5rem;
+    }
+
+    &__description {
+      width: 72.3118%;
+      margin-top: 1.375rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    &__form {
+      width: 100%;
+      margin-top: 5rem;
+      gap: 3rem;
+    }
+
+    &__row { gap: 5.3763%; }
+
+    &__field {
+      height: 3.0625rem;
+
+      > span,
+      input,
+      textarea {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+
+      input,
+      textarea {
+        height: 3rem;
+        padding-bottom: 1.5rem;
+      }
+    }
+
+    &__attachment-title {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    &__attachment-dropzone { display: none; }
+
+    &__attachment-status,
+    &__attachment-button,
+    &__attachment-file {
+      min-height: 3rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    &__attachment-button {
+      width: 32.2581%;
+      flex-basis: 32.2581%;
+    }
+
+    &__submit {
+      width: 13.75rem;
+      height: 4.25rem;
+      align-self: center;
+      margin-top: 0.75rem;
+    }
+  }
+}

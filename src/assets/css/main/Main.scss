@@ -1,0 +1,17 @@
+.main {
+  width: 100%;
+  overflow: clip;
+}
+
+.inner {
+  width: min(var(--inner-width, 1580px), calc(100% - var(--inner-gutter, 80px)));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (max-width: 1024px) {
+  .inner {
+    width: calc(100% - 40px);
+    max-width: none;
+  }
+}

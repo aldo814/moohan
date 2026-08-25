@@ -1,0 +1,114 @@
+@use '../variables' as *;
+
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 11px 20px;
+  gap: 4px;
+  border: 1px solid rgba($color-white, 0.2);
+  border-radius: 60px;
+  color: $color-white;
+  transition: border-color 180ms ease, background-color 180ms ease;
+
+  &:hover {
+    border-color: rgba($color-white, 0.65);
+    background: rgba($color-white, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-white;
+    outline-offset: 3px;
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+
+    &--small {
+      width: 12px;
+      height: 12px;
+      flex-basis: 12px;
+      margin-left: 4px;
+    }
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .pill-button {
+    min-height: 2.5rem;
+    padding: 0.6875rem 1rem;
+
+    &__icon {
+      width: 0.75rem;
+      height: 0.75rem;
+      flex-basis: 0.75rem;
+    }
+
+    &__icon--small {
+      width: 0.75rem;
+      height: 0.75rem;
+      flex-basis: 0.75rem;
+      margin-left: 0;
+    }
+
+    &__label {
+      font-size: 0.75rem;
+      line-height: 1rem;
+    }
+  }
+}
+
+.language-switcher {
+  position: relative;
+
+  &__trigger {
+    cursor: pointer;
+    background: transparent;
+  }
+
+  &__icon--open {
+    transform: rotate(180deg);
+  }
+
+  &__menu {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 120px;
+    margin: 0;
+    padding: 6px;
+    border: 1px solid rgba($color-white, 0.2);
+    border-radius: 12px;
+    background: rgba($color-black, 0.92);
+    box-shadow: 0 12px 32px rgba($color-black, 0.25);
+    list-style: none;
+  }
+
+  &__option {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: rgba($color-white, 0.72);
+    font-size: 14px;
+    line-height: 24px;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus-visible,
+    &--active {
+      background: rgba($color-white, 0.1);
+      color: $color-white;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+@use './common/PillButton';
+.pc_show { display: block; }
+.m_show { display: none; }
+
+@media (max-width: 1024px) {
+  .pc_show { display: none; }
+  .m_show { display: block; }
+}
