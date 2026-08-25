@@ -14,40 +14,10 @@ import 'swiper/css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const servicesIntro = 'Patent translation is a highly specialized field that demands both legal and technical accuracy, along with strict compliance with the regulations of patent offices around the world. We combine the precise work of translators specialized by technology field with intelligent translation support technology to deliver tailored translation services optimized for every stage of patent practice — from filing and examination to dispute resolution.'
+const serviceBackgrounds = [pctBackground, directFilingBackground, officeActionBackground, ipLitigationBackground]
 
-const serviceSlides = [
-  {
-    number: '01',
-    title: 'PCT National Phase Translation',
-    description:
-      'We provide PCT national phase entry translations that comply with the filing formats and regulations of patent offices worldwide.',
-    background: pctBackground,
-  },
-  {
-    number: '02',
-    title: 'Direct Filing Translation',
-    description:
-      'We provide translations formatted appropriately for direct, individual filing with patent offices in each country within the priority claim period.',
-    background: directFilingBackground,
-  },
-  {
-    number: '03',
-    title: 'Office Action Document Translation',
-    description:
-      'We provide translations of office action documents — including notices of reasons for refusal and decisions of rejection — as well as the corresponding responses and amendments.',
-    background: officeActionBackground,
-  },
-  {
-    number: '04',
-    title: 'IP & Litigation Translation',
-    description:
-      'We provide translations of specialized documents requiring a high level of legal and technical understanding, including IP-related statutes, trial/appeal decisions, court rulings, and patent infringement and dispute materials.',
-    background: ipLitigationBackground,
-  },
-]
-
-function Services() {
+function Services({ dictionary }) {
+  const serviceSlides = dictionary.items.map((service, index) => ({ ...service, background: serviceBackgrounds[index] }))
   const sectionRef = useRef(null)
   const swiperRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -124,14 +94,14 @@ function Services() {
     }, section)
 
     return () => context.revert()
-  }, [])
+  }, [serviceSlides.length])
 
   return (
-    <section className="services" id="services" aria-label="Services" ref={sectionRef}>
+    <section className="services" id="services" aria-label={dictionary.label} ref={sectionRef}>
       <div className="inner services__intro">
         <div className="services__intro-copy">
-          <h2 className="services__intro-title">SERVICES</h2>
-          <p className="services__intro-description">{servicesIntro}</p>
+          <h2 className="services__intro-title">{dictionary.title}</h2>
+          <p className="services__intro-description">{dictionary.intro}</p>
         </div>
       </div>
 
@@ -170,13 +140,13 @@ function Services() {
         ))}
       </Swiper>
 
-      <div className="services__pagination" aria-label="Service slides">
+      <div className="services__pagination" aria-label={dictionary.slideLabel}>
         {serviceSlides.map((service, index) => (
           <button
             type="button"
             className={`services__pagination-item${index === activeIndex ? ' services__pagination-item--active' : ''}`}
             key={service.number}
-            aria-label={`Go to service ${index + 1}: ${service.title}`}
+            aria-label={`${dictionary.goToSlide} ${index + 1}: ${service.title}`}
             aria-current={index === activeIndex ? 'true' : undefined}
             onClick={() => swiperRef.current?.slideTo(index)}
           />

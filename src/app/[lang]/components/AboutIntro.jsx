@@ -13,9 +13,7 @@ import aboutImage04 from '../../../assets/images/main/img_about_04.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const aboutCopy = `Since our founding in 2006, we have provided high-quality patent translation across diverse technology fields — including patent application specifications, office action documents, and IP and litigation-related materials. Not content to rely solely on our translators' accumulated expertise, we have integrated a cloud-based translation management system (TMS) and intelligent translation support technology into our workflow to ensure more precise and consistent quality.`
-
-function AboutIntro() {
+function AboutIntro({ dictionary }) {
   const sectionRef = useRef(null)
   const trackRef = useRef(null)
   const logoRef = useRef(null)
@@ -67,7 +65,7 @@ function AboutIntro() {
   }, [])
 
   return (
-    <section className="about-intro" id="about" aria-label="About Moohan" ref={sectionRef}>
+    <section className="about-intro" id="about" aria-label={dictionary.label} ref={sectionRef}>
       <div className="about-intro__stage">
         <div className="about-intro__logo" aria-hidden="true" ref={logoRef}>
           <Image className="about-intro__logo-base" src={logoAbout} alt="" width={219} height={46} ref={logoBaseRef} />
@@ -79,7 +77,7 @@ function AboutIntro() {
           <figure className="about-intro__visual about-intro__visual--three"><Image src={aboutImage03} alt="" width={812} height={601} /></figure>
           <figure className="about-intro__visual about-intro__visual--four"><Image src={aboutImage04} alt="" width={1072} height={611} /></figure>
         </div>
-        <p className="about-intro__description" ref={descriptionRef}>{aboutCopy}</p>
+        <p className="about-intro__description" ref={descriptionRef}>{dictionary.description}</p>
       </div>
     </section>
   )

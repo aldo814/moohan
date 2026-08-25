@@ -53,28 +53,30 @@
   }
 
   &__scroll {
-    position: relative;
+    position: absolute;
     z-index: 3;
+    bottom: -130px;
+    left: 50%;
     display: flex;
     width: 260px;
     height: 260px;
-    flex: 0 0 260px;
+    border-radius: 260px;
     flex-direction: column;
     align-items: center;
-    margin-top: 20.5556svh;
+    margin: 0;
     padding-top: 44px;
     gap: 8px;
+    transform: translateX(-50%);
+background: rgba(255, 255, 255, 0.10);
+backdrop-filter: blur(10px);
   }
 
-  &__scroll-ring {
-    position: absolute;
-    width: 260px;
-    height: 260px;
-  }
+
 
   &__scroll-label,
   &__scroll-icon {
     z-index: 1;
+    animation: hero-scroll-down 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 
   &__scroll-label {
@@ -87,6 +89,11 @@
     width: 24px;
     height: 24px;
   }
+}
+
+@keyframes hero-scroll-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
 }
 
 @media (max-width: 1024px) {
@@ -119,4 +126,9 @@
 
     &__scroll { display: none; }
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-label,
+  .hero__scroll-icon { animation: none; }
 }

@@ -5,15 +5,15 @@ import Technologies from './components/Technologies'
 import Contact from './components/Contact'
 import Footer from '../../components/layout/Footer/Footer'
 
-function Main({ currentLocale, languageLabel }) {
+function Main({ currentLocale, languageLabel, dictionary }) {
   return (
     <main className="main">
-      <Hero currentLocale={currentLocale} languageLabel={languageLabel} />
-      <AboutIntro />
-      <Services />
-      <Technologies />
-      <Contact />
-      <Footer />
+      <Hero currentLocale={currentLocale} languageLabel={languageLabel} dictionary={dictionary} />
+      <AboutIntro dictionary={dictionary.home.about} />
+      <Services dictionary={dictionary.home.services} />
+      <Technologies dictionary={dictionary.home.technologies} />
+      <Contact dictionary={dictionary.home.contact} />
+      <Footer common={dictionary.common} dictionary={dictionary.home.footer} />
     </main>
   )
 }

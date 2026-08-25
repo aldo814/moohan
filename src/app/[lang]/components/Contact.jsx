@@ -15,7 +15,7 @@ const initialForm = {
   message: '',
 }
 
-function Contact() {
+function Contact({ dictionary }) {
   const attachmentInputRef = useRef(null)
   const messageTextareaRef = useRef(null)
   const [form, setForm] = useState(initialForm)
@@ -46,7 +46,7 @@ function Contact() {
 
     if (invalidFile) {
       setStatus('error')
-      setFeedback('JPG, GIF, PDF 파일만 첨부할 수 있으며 파일당 최대 용량은 10MB입니다.')
+      setFeedback(dictionary.invalidFile)
       return
     }
 
@@ -88,7 +88,7 @@ function Contact() {
       const result = await response.json()
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || 'Unable to send your inquiry.')
+        throw new Error(result.message || dictionary.error)
       }
 
       setForm(initialForm)
@@ -97,10 +97,10 @@ function Contact() {
       if (messageTextareaRef.current) messageTextareaRef.current.style.height = '60px'
       formElement.reset()
       setStatus('success')
-      setFeedback('Thank you. Your inquiry has been sent successfully.')
+      setFeedback(dictionary.success)
     } catch (error) {
       setStatus('error')
-      setFeedback(error.message || 'Unable to send your inquiry. Please try again.')
+      setFeedback(error.message || dictionary.error)
     }
   }
 
@@ -109,42 +109,40 @@ function Contact() {
       <Image className="contact__decoration" src={contactDecoration} alt="" width={540} height={586} />
       <div className="inner contact__inner">
         <div className="contact__intro">
-          <h2 className="contact__title" id="contact-title">CONTACT US</h2>
-          <p className="contact__description">
-            Thank you for contacting us. Our team will review your inquiry and respond within 1 business day.
-          </p>
+          <h2 className="contact__title" id="contact-title">{dictionary.title}</h2>
+          <p className="contact__description">{dictionary.description}</p>
         </div>
 
         <form className="contact__form" onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="contact__row">
             <label className="contact__field">
-              <span>First Name<b>*</b></span>
+              <span>{dictionary.firstName}<b>*</b></span>
               <input name="firstName" value={form.firstName} onChange={handleChange} required autoComplete="given-name" placeholder=" " />
             </label>
             <label className="contact__field">
-              <span>Last Name<b>*</b></span>
+              <span>{dictionary.lastName}<b>*</b></span>
               <input name="lastName" value={form.lastName} onChange={handleChange} required autoComplete="family-name" placeholder=" " />
             </label>
           </div>
 
           <label className="contact__field">
-            <span>Company</span>
+            <span>{dictionary.company}</span>
             <input name="company" value={form.company} onChange={handleChange} autoComplete="organization" placeholder=" " />
           </label>
 
           <div className="contact__row">
             <label className="contact__field">
-              <span>Email<b>*</b></span>
+              <span>{dictionary.email}<b>*</b></span>
               <input type="email" name="email" value={form.email} onChange={handleChange} required autoComplete="email" placeholder=" " />
             </label>
             <label className="contact__field">
-              <span>Phone</span>
+              <span>{dictionary.phone}</span>
               <input type="tel" name="phone" value={form.phone} onChange={handleChange} autoComplete="tel" placeholder=" " />
             </label>
           </div>
 
           <label className="contact__field contact__field--message">
-            <span>Message<b>*</b></span>
+            <span>{dictionary.message}<b>*</b></span>
             <textarea
               ref={messageTextareaRef}
               name="message"
@@ -158,7 +156,7 @@ function Contact() {
 
           <div className="contact__attachment">
             <div className="contact__attachment-header">
-              <span className="contact__attachment-title">Attachment</span>
+              <span className="contact__attachment-title">{dictionary.attachment}</span>
             </div>
             <input
               className="contact__attachment-input"
@@ -188,21 +186,23 @@ function Contact() {
             >
               <Image className="contact__attachment-upload-icon" src={contactUploadIcon} alt="" width={54} height={49} />
               <div className="contact__attachment-guide">
-                <p>첨부할 파일을 여기에 끌어 놓거나, 파일선택 버튼을 선택해주세요</p>
-                <p>업로드 가능 파일 : JPG, GIF, PDF (최대 업로드 용량 : 10MB/각파일)</p>
+                <p>{dictionary.dropGuide}</p>
+                <p>{dictionary.uploadGuide}</p>
               </div>
             </label>
             <div className="contact__attachment-controls">
               <div className="contact__attachment-status">
-                {attachments.length > 0 ? `${attachments.length}개 파일이 선택되었습니다.` : '선택된 파일이 없습니다.'}
+                {attachments.length > 0
+                  ? dictionary.selectedFiles.replace('{count}', String(attachments.length))
+                  : dictionary.noFile}
               </div>
-              <label className="contact__attachment-button" htmlFor="contact-attachment">파일 선택</label>
+              <label className="contact__attachment-button" htmlFor="contact-attachment">{dictionary.chooseFile}</label>
             </div>
             <div className="contact__attachment-files" aria-live="polite">
               {attachments.map((attachment, index) => (
                 <div className="contact__attachment-file" key={`${attachment.name}-${attachment.size}-${attachment.lastModified}`}>
                   <span>{attachment.name}</span>
-                  <button type="button" onClick={() => handleAttachmentRemove(index)} aria-label={`${attachment.name} 삭제`}>
+                  <button type="button" onClick={() => handleAttachmentRemove(index)} aria-label={`${attachment.name} ${dictionary.removeFile}`}>
                     <Image src={contactRemoveIcon} alt="" width={8} height={8} />
                   </button>
                 </div>
@@ -211,7 +211,7 @@ function Contact() {
           </div>
 
           <button className="contact__submit" type="submit" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending…' : 'Submit'}
+            {status === 'sending' ? dictionary.sending : dictionary.submit}
           </button>
 
           {feedback && (

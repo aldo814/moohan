@@ -37,6 +37,7 @@ export default async function Home({
     <Main
       currentLocale={lang}
       languageLabel={t.common.languageSwitcher.label}
+      dictionary={t}
     />
   );
 }

@@ -1,22 +1,14 @@
 import type { Dictionary } from "./ko";
 
 export const zh = {
-  meta: {
-    siteName: "mthome",
-    home: {
-      title: "首页",
-      description: "多语言主页。",
-    },
-  },
-  common: {
-    languageSwitcher: {
-      label: "选择语言",
-    },
-  },
+  meta: { siteName: "MOOHAN专利翻译", home: { title: "首页", description: "由AI技术驱动的专业专利翻译服务" } },
+  common: { languageSwitcher: { label: "选择语言" }, navigation: { home: "首页", about: "关于我们", services: "服务", technologies: "技术", contact: "联系我们" }, homeLabel: "MOOHAN首页", primaryNavigation: "主导航", footerNavigation: "页脚导航", login: "TMS登录", backToTop: "返回顶部" },
   home: {
-    hero: {
-      title: "欢迎",
-      subtitle: "此处为网站介绍文字。", // TODO: translate — 실제 소개 문구 확정 후 갱신
-    },
+    hero: { titleLine1: "自2006年积累的专利翻译专长。", titleLine2: "由尖端AI技术全面赋能", description: "自2006年以来，我们持续深耕专利翻译领域，如今更结合云端翻译管理系统（TMS）与最新AI技术。专利专家在AI翻译与验证工具的支持下，为从申请、审查到争议解决的专利全生命周期提供准确、一致的翻译。", scrollDown: "SCROLL DOWN" },
+    about: { label: "关于MOOHAN", description: "自2006年成立以来，我们在专利申请说明书、审查意见文件以及知识产权和诉讼相关文件等多个技术领域提供高质量专利翻译。我们不只依赖译员积累的专业经验，还将云端翻译管理系统（TMS）和智能翻译辅助技术融入工作流程，以确保更加准确、一致的品质。" },
+    services: { label: "服务", title: "服务", intro: "专利翻译是一项高度专业的工作，不仅要求法律和技术层面的准确性，还必须严格遵守世界各国专利局的规定。我们将各技术领域专业译员的精细工作与智能翻译辅助技术相结合，为从申请、审查到争议解决的专利实务各阶段提供定制化翻译服务。", items: [ { number: "01", title: "PCT国家阶段翻译", description: "提供符合世界各国专利局申请格式及规定的PCT国家阶段进入翻译。" }, { number: "02", title: "海外直接申请翻译", description: "在优先权期限内，为向各国专利局分别直接提交申请提供符合当地格式的翻译。" }, { number: "03", title: "审查意见文件翻译", description: "提供驳回理由通知、驳回决定等审查意见文件及相应答复和修改文件的翻译。" }, { number: "04", title: "知识产权与诉讼翻译", description: "翻译知识产权相关法规、复审决定、法院判决、专利侵权及争议材料等需要高度法律与技术理解的专业文件。" } ], slideLabel: "服务轮播", goToSlide: "转到服务" },
+    technologies: { title: "技术", items: [ { title: "规则型QA", description: "通过基于正则表达式的规则和标准化自动审核算法，精确检测数字、特殊字符、附图标记、术语及文体等错误。译员在提交前进行最终检查，审校人员在审校阶段使用同一系统复核，为整个翻译流程提供双重质量保障。" }, { title: "NMT机器翻译", description: "专为专利领域优化的NMT引擎提供机器翻译，使专业译员能够在此基础上快速、准确地工作。" }, { title: "LLM AI翻译", description: "LLM参考各客户的翻译资产（TM/TB）和专利翻译风格指南，提供定制化机器翻译。" }, { title: "LLM AI译后编辑", description: "LLM参考客户翻译资产和风格指南，对遗漏、误译及上下文不一致进行精密交叉验证，并提供修订译文和详细意见。" }, { title: "云端翻译平台", description: "从项目设置到翻译和审校，提供整合TM、TB及NMT/LLM的统一云端环境。通过分阶段权限管理实现系统化协作。" } ], workflowLabel: "翻译技术工作流程", projectSetup: "项目设置", connected: "文件·TM·TB·AI引擎已连接", platform: "云端翻译平台", environment: "统一TM·TB·NMT/LLM环境", translator: "译员", reviewer: "审校人员", nmtTranslation: "NMT/LLM翻译", initialDraft: "生成初稿", ruleQa: "规则型QA", finalCheck: "提交前最终检查", reviewCheck: "审校阶段复核", llmPostEditing: "LLM译后编辑", revision: "提供交叉验证与修订", complete: "审校翻译完成" },
+    contact: { title: "联系我们", description: "感谢您的联系。我们的团队将在审核您的咨询后于1个工作日内回复。", firstName: "名", lastName: "姓", company: "公司", email: "电子邮箱", phone: "电话", message: "咨询内容", attachment: "附件", dropGuide: "将文件拖放到此处或点击选择文件按钮。", uploadGuide: "支持JPG、GIF、PDF（每个文件最大10MB）", noFile: "未选择文件。", selectedFiles: "已选择{count}个文件。", chooseFile: "选择文件", removeFile: "删除", submit: "提交", sending: "发送中…", success: "感谢您，咨询已成功发送。", error: "无法发送咨询，请重试。", invalidFile: "仅可附加JPG、GIF、PDF文件，每个文件最大10MB。" },
+    footer: { tel: "电话", fax: "传真", contact: "邮箱", address: "地址", addressValue: "韩国首尔特别市衿川区加山数码2路169-16 hausD FIRSTAR 518室", copyright: "©2026 MOOHAN专利翻译有限公司" },
   },
 } satisfies Dictionary;

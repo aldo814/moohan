@@ -22,7 +22,9 @@ body {
   color: $color-white;
   font-family: $font-primary;
   font-synthesis: none;
+  overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
+  word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
