@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import logo from '../../../assets/images/common/logo_moohan.svg'
 import logoSymbol from '../../../assets/images/common/logo_moohan_symbol.svg'
+import footerTopIcon from '../../../assets/images/common/ico_arrow_top.svg'
 
 function Footer({ common, dictionary }) {
   const navigation = [
@@ -28,29 +29,31 @@ function Footer({ common, dictionary }) {
           </nav>
 
           <div className="footer__info-column footer__info-column--primary">
-          <div className="footer__info">
-            <span className="footer__label">{dictionary.tel}</span>
-            <a className="footer__value footer__value--large" href="tel:+8225647789">+82-2-564-7789</a>
-          </div>
-          <div className="footer__info">
-            <span className="footer__label">{dictionary.address}</span>
-            <address className="footer__value footer__value--address">{dictionary.addressValue}</address>
-          </div>
+            <div className="footer__info">
+              <span className="footer__label">{dictionary.tel}</span>
+              <a className="footer__value footer__value--large" href="tel:+8225647789">+82-2-564-7789</a>
+            </div>
+            <div className="footer__info">
+              <span className="footer__label">{dictionary.address}</span>
+              <address className="footer__value footer__value--address">{dictionary.addressValue}</address>
+            </div>
           </div>
 
           <div className="footer__info-column footer__info-column--secondary">
-          <div className="footer__info">
-            <span className="footer__label">{dictionary.fax}</span>
-            <span className="footer__value footer__value--large">+82-2-6442-0787</span>
-          </div>
-          <div className="footer__info">
-            <span className="footer__label">{dictionary.contact}</span>
-            <a className="footer__value footer__value--contact" href="mailto:info@mttrans.co.kr">info@mttrans.co.kr</a>
-          </div>
+            <div className="footer__info">
+              <span className="footer__label">{dictionary.fax}</span>
+              <span className="footer__value footer__value--large">+82-2-6442-0787</span>
+            </div>
+            <div className="footer__info">
+              <span className="footer__label">{dictionary.contact}</span>
+              <a className="footer__value footer__value--contact" href="mailto:info@mttrans.co.kr">info@mttrans.co.kr</a>
+            </div>
           </div>
         </div>
-        <a className="footer__top" href="#top" aria-label={common.backToTop}>↑</a>
-        <p className="footer__copyright">{dictionary.copyright}</p>
+        <a className="footer__top" href="#top" aria-label={common.backToTop}>
+          <Image src={footerTopIcon} alt="" width={24} height={24} />
+        </a>
+        <p className="footer__copyright">©2026 MOOHAN Technical Translation Services Co., Ltd.</p>
       </div>
     </footer>
   )

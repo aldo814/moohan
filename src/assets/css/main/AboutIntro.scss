@@ -1,11 +1,16 @@
 @use '../variables' as *;
 
+.about-services {
+  position: relative;
+  background: $color-white;
+}
+
 .about-intro {
   position: relative;
   width: 100%;
   height: 100svh;
   overflow: hidden;
-  background: $color-white;
+  background: transparent;
 
   &__stage {
     position: relative;
@@ -45,7 +50,9 @@
     left: 20.55%;
     width: 30.59%;
     max-width: none;
-    height: 74.73%;
+    height: auto;
+    aspect-ratio: 67 / 34;
+    object-fit: contain;
   }
 
   &__track {
@@ -110,8 +117,8 @@
       left: 8.4951%;
       width: 83.0097%;
       max-width: none;
-      height: 4.4375rem;
-      aspect-ratio: auto;
+      height: auto;
+      aspect-ratio: 940 / 196;
       opacity: 1;
     }
 
@@ -145,6 +152,18 @@
       width: 100%;
       height: 100%;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .about-intro {
+    height: 100svh;
+    min-height: 100svh;
+    will-change: background-color;
+
+    &__logo,
+    &__description,
+    &__track { will-change: transform, opacity; }
   }
 }
 

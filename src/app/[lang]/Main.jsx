@@ -9,8 +9,10 @@ function Main({ currentLocale, languageLabel, dictionary }) {
   return (
     <main className="main">
       <Hero currentLocale={currentLocale} languageLabel={languageLabel} dictionary={dictionary} />
-      <AboutIntro dictionary={dictionary.home.about} />
-      <Services dictionary={dictionary.home.services} />
+      <div className="about-services">
+        <AboutIntro dictionary={dictionary.home.about} />
+        <Services dictionary={dictionary.home.services} />
+      </div>
       <Technologies dictionary={dictionary.home.technologies} />
       <Contact dictionary={dictionary.home.contact} />
       <Footer common={dictionary.common} dictionary={dictionary.home.footer} />

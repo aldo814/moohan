@@ -1,8 +1,7 @@
 import Image from 'next/image'
 import { LanguageSwitcher } from '../../language-switcher'
 import PillButton from '../../common/PillButton/PillButton'
-import logo from '../../../assets/images/common/logo_moohan.svg'
-import logoSymbol from '../../../assets/images/common/logo_moohan_symbol.svg'
+import logo from '../../../assets/images/common/logo_moohan_combined.svg'
 import userIcon from '../../../assets/images/common/ico_user.svg'
 
 function Header({ currentLocale, languageLabel, dictionary }) {
@@ -16,8 +15,7 @@ function Header({ currentLocale, languageLabel, dictionary }) {
     <header className="header">
       <a className="header__logo-link" href="#top" aria-label={dictionary.homeLabel}>
         <span className="header__logo" aria-hidden="true">
-          <Image className="header__logo-base" src={logo} alt="" width={164} height={34} />
-          <Image className="header__logo-symbol" src={logoSymbol} alt="" width={50} height={25} />
+          <Image className="header__logo-image" src={logo} alt="" width={164} height={34} />
         </span>
         <span className="header__sr-only">Moohan</span>
       </a>

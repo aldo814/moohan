@@ -30,9 +30,22 @@ function Contact({ dictionary }) {
   }
 
   const handleMessageChange = (event) => {
+    const textarea = event.currentTarget
+    const previousHeight = textarea.offsetHeight
+
     handleChange(event)
-    event.currentTarget.style.height = 'auto'
-    event.currentTarget.style.height = `${Math.max(60, event.currentTarget.scrollHeight)}px`
+    textarea.style.height = 'auto'
+    const nextHeight = Math.max(60, textarea.scrollHeight)
+    textarea.style.height = `${nextHeight}px`
+
+    if (nextHeight > previousHeight) {
+      window.requestAnimationFrame(() => {
+        window.scrollBy({
+          top: nextHeight - previousHeight,
+          behavior: 'smooth',
+        })
+      })
+    }
   }
 
   const addValidatedAttachments = (fileList) => {

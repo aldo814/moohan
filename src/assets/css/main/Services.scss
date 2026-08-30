@@ -6,7 +6,7 @@
   width: 100%;
   height: 100svh;
   overflow: hidden;
-  background: #23262c;
+  background: transparent;
   color: $color-white;
   isolation: isolate;
 
@@ -132,6 +132,7 @@
   }
 
   &__pagination-item {
+    --progress: 0;
     position: relative;
     display: block;
     height: 4px;
@@ -141,12 +142,17 @@
     background: rgba($color-white, 0.1);
     cursor: pointer;
 
-    &--active::after {
+    &::after {
       position: absolute;
       inset: 0 auto 0 0;
-      width: 100%;
+      width: calc(var(--progress) * 100%);
       background: $color-white;
       content: '';
+      will-change: width;
+    }
+
+    &--active::after {
+      width: calc(var(--progress) * 100%);
     }
   }
 }
@@ -161,7 +167,7 @@
     &__swiper {
       transform: none !important;
       will-change: auto;
-      touch-action: pan-y;
+      touch-action: none !important;
 
       .swiper-wrapper {
         transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
@@ -215,6 +221,68 @@
     &__pagination {
       bottom: 3.75rem;
       width: calc(100% - 40px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .services {
+    height: 100svh;
+    min-height: 100svh;
+
+    &--last .services__swiper { touch-action: pan-y !important; }
+
+    &__intro {
+      z-index: 10;
+      display: block;
+      width: 100%;
+      padding: 0 4.8544%;
+    }
+
+    &__intro-copy {
+      width: 100%;
+      padding: 13.5rem 0 0;
+    }
+
+    &__intro-title {
+      font-size: clamp(2.75rem, 13.5922vw, 3.5rem);
+      line-height: 1.2857;
+    }
+
+    &__intro-description {
+      margin-top: 1.5rem;
+      font-size: clamp(0.875rem, 3.8835vw, 1rem);
+      line-height: 1.625;
+    }
+
+    &__swiper {
+      z-index: 11;
+      will-change: clip-path;
+    }
+
+    &__inner {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding-inline: 4.8544%;
+    }
+
+    &__number { left: 4.8544%; }
+
+    &__content {
+      left: 4.8544%;
+      width: 90.2912%;
+    }
+
+    &__pagination {
+      z-index: 12;
+      top: auto;
+      bottom: 3.75rem;
+      width: 90.2912%;
+    }
+
+    &__pagination-item {
+      background: rgba($color-white, 0.28);
     }
   }
 }

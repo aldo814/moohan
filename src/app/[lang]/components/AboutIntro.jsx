@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import logoAbout from '../../../assets/images/main/logo_about.svg'
@@ -19,17 +19,77 @@ function AboutIntro({ dictionary }) {
   const logoRef = useRef(null)
   const logoBaseRef = useRef(null)
   const descriptionRef = useRef(null)
+  const [viewportMode, setViewportMode] = useState(null)
+
+  useEffect(() => {
+    let resizeFrame = null
+
+    const syncViewportMode = () => {
+      if (resizeFrame) cancelAnimationFrame(resizeFrame)
+      resizeFrame = requestAnimationFrame(() => {
+        const nextMode = window.matchMedia('(max-width: 48rem)').matches
+          ? 'mobile'
+          : window.matchMedia('(max-width: 64rem)').matches
+            ? 'compact'
+            : 'desktop'
+        setViewportMode((currentMode) => currentMode === nextMode ? currentMode : nextMode)
+      })
+    }
+
+    syncViewportMode()
+    window.addEventListener('resize', syncViewportMode, { passive: true })
+    return () => {
+      window.removeEventListener('resize', syncViewportMode)
+      if (resizeFrame) cancelAnimationFrame(resizeFrame)
+    }
+  }, [])
 
   useLayoutEffect(() => {
     const section = sectionRef.current
+    const sharedBackground = section?.parentElement
     const track = trackRef.current
     const logo = logoRef.current
     const logoBase = logoBaseRef.current
     const description = descriptionRef.current
     const visuals = gsap.utils.toArray('.about-intro__visual', section)
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const mobileLayout = window.matchMedia('(max-width: 64rem)').matches
-    if (!section || !track || !logo || !logoBase || !description || reduceMotion || mobileLayout) return undefined
+    const compactLayout = viewportMode === 'compact'
+    const mobileLayout = viewportMode === 'mobile'
+    if (!section || !viewportMode || !sharedBackground || !track || !logo || !logoBase || !description || reduceMotion) return undefined
+
+    if (mobileLayout) {
+      const mobileContext = gsap.context(() => {
+        gsap.set(logo, { opacity: 1 })
+        gsap.set(track, { y: 0, opacity: 1 })
+
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.8,
+            invalidateOnRefresh: true,
+          },
+        })
+          .to(logo, { opacity: 0.64, yPercent: -18, duration: 1.2, ease: 'none' }, 0)
+          .to(description, { color: '#ffffff', yPercent: -28, duration: 1.2, ease: 'none' }, 0)
+          .to(track, { yPercent: -118, duration: 1.2, ease: 'none' }, 0)
+          .to(sharedBackground, { backgroundColor: '#23262c', duration: 0.28, ease: 'none' }, 0.08)
+          .to(logoBase, { filter: 'invert(1) brightness(2)', duration: 0.28, ease: 'none' }, 0.08)
+      }, section)
+
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+      return () => {
+        mobileContext.revert()
+        ScrollTrigger.refresh()
+      }
+    }
+
+    if (compactLayout) {
+      gsap.set([track, logo, logoBase, description, sharedBackground], { clearProps: 'all' })
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+      return () => ScrollTrigger.refresh()
+    }
 
     const context = gsap.context(() => {
       const timeline = gsap.timeline({
@@ -45,24 +105,29 @@ function AboutIntro({ dictionary }) {
       })
 
       timeline
-        .to(logo, { opacity: 0.4, duration: 0.8, ease: 'none' })
-        .to(logo, { opacity: 1, duration: 0.8, ease: 'none' })
+        .to(logo, { opacity: 0.55, duration: 1.4, ease: 'none' })
+        .to(logo, { opacity: 1, duration: 1.4, ease: 'none' })
         .to(track, {
           y: () => -(track.getBoundingClientRect().height * (2313 / 1402) + window.innerHeight * 0.2),
           duration: 7.2,
           ease: 'none',
-        }, 0)
-        .to(visuals[0], { y: () => -window.innerHeight * 0.12, duration: 7.2, ease: 'none' }, 0)
-        .to(visuals[1], { y: () => window.innerHeight * 0.08, duration: 7.2, ease: 'none' }, 0)
-        .to(visuals[2], { y: () => -window.innerHeight * 0.18, duration: 7.2, ease: 'none' }, 0)
-        .to(visuals[3], { y: () => window.innerHeight * 0.1, duration: 7.2, ease: 'none' }, 0)
-        .to(section, { backgroundColor: '#23262c', duration: 1.6, ease: 'none' }, 1.6)
-        .to(logoBase, { filter: 'invert(1) brightness(2)', duration: 1.6, ease: 'none' }, 1.6)
-        .to(description, { color: '#ffffff', duration: 1.6, ease: 'none' }, 1.6)
+        }, 2.8)
+        .to(visuals[0], { y: () => -window.innerHeight * 0.12, duration: 7.2, ease: 'none' }, 2.8)
+        .to(visuals[1], { y: () => window.innerHeight * 0.08, duration: 7.2, ease: 'none' }, 2.8)
+        .to(visuals[2], { y: () => -window.innerHeight * 0.18, duration: 7.2, ease: 'none' }, 2.8)
+        .to(visuals[3], { y: () => window.innerHeight * 0.1, duration: 7.2, ease: 'none' }, 2.8)
+        .to(sharedBackground, { backgroundColor: '#23262c', duration: 1.8, ease: 'none' }, 2.8)
+        .to(logoBase, { filter: 'invert(1) brightness(2)', duration: 1.8, ease: 'none' }, 2.8)
+        .to(description, { color: '#ffffff', duration: 1.8, ease: 'none' }, 2.8)
+
+      requestAnimationFrame(() => ScrollTrigger.refresh())
     }, section)
 
-    return () => context.revert()
-  }, [])
+    return () => {
+      context.revert()
+      ScrollTrigger.refresh()
+    }
+  }, [viewportMode])
 
   return (
     <section className="about-intro" id="about" aria-label={dictionary.label} ref={sectionRef}>

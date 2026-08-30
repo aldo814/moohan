@@ -6,22 +6,21 @@
   color: #fff;
 }
 .footer__inner {
-  display: flex;
-  width: 1840px;
+  position: relative;
+  width: calc(100% - 80px);
+  max-width: 1840px;
   margin: 0 auto;
-  flex-direction: column;
 }
 .footer__main {
-  display: flex;
+  display: grid;
   width: 100%;
+  grid-template-columns: 21.6304% 24.5652% 26.087% 27.7174%;
   align-items: flex-start;
-  gap: 4.2553%;
 }
 .footer__logo-link {
   width: 164px;
   height: 34px;
-  align-self: start;
-  flex: 0 0 8.5106%;
+  grid-column: 1;
 }
 .footer__logo {
   position: relative;
@@ -45,7 +44,7 @@
 }
 .footer__nav {
   display: flex;
-  flex: 0 1 10.6383%;
+  grid-column: 2;
   flex-direction: column;
   align-items: flex-start;
   align-self: start;
@@ -59,12 +58,14 @@
 }
 .footer__info-column {
   display: flex;
+  width: 100%;
+  min-width: 0;
   flex-direction: column;
   align-self: start;
-  min-width: 0;
-  flex: 1 1 0;
   gap: 80px;
 }
+.footer__info-column--primary { grid-column: 3; }
+.footer__info-column--secondary { grid-column: 4; }
 .footer__info {
   display: flex;
   flex-direction: column;
@@ -97,8 +98,35 @@
   line-height: 32px;
 }
 
-.footer__top,
-.footer__copyright { display: none; }
+.footer__top {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  place-items: center;
+  z-index: 999;
+
+  img {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.footer__copyright {
+  margin: 0;
+  padding-top: 200px;
+  opacity: 0.6;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  white-space: nowrap;
+}
 
 @media (max-width: 1024px) {
   .footer__inner {
@@ -108,10 +136,14 @@
 
 @media (max-width: 768px) {
   .footer {
+    height: auto;
     min-height: 39.875rem;
     padding: 5rem 0 2.5rem;
 
-    &__inner { position: relative; height: 100%; }
+    &__inner {
+      position: relative;
+      width: calc(100% - 40px);
+    }
 
     &__main {
       display: flex;
@@ -160,20 +192,23 @@
       position: absolute;
       top: -0.0625rem;
       right: 0;
+      bottom: auto;
       display: grid;
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 50%;
       background: #fff;
-      color: #111;
-      font-size: 1.25rem;
       place-items: center;
+
+      img { width: 1.5rem; height: 1.5rem; }
     }
 
     &__copyright {
+      position: static;
       display: block;
       order: 5;
       margin: 2.5rem 0 0;
+      padding-top: 0;
       opacity: 0.6;
       font-size: 0.875rem;
       line-height: 1.5rem;

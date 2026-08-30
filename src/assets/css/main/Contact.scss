@@ -382,15 +382,32 @@
     }
 
     &__attachment-button {
-      width: 32.2581%;
-      flex-basis: 32.2581%;
+      width: 100px;
+    }
+
+    &__row{
+      flex-direction: column;
+      gap: 2.5rem;
     }
 
     &__submit {
-      width: 13.75rem;
-      height: 4.25rem;
+      width: 11.25rem;
+      font-size: 1rem;
+      height: 3.125rem;
       align-self: center;
       margin-top: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .contact {
+    min-height: 59.375rem;
+    padding: 7.5rem 0 5rem;
+
+    &__form {
+      margin-top: 3.75rem;
+      gap: 2rem;
     }
   }
 }

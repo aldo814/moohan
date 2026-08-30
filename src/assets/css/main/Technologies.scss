@@ -38,7 +38,8 @@
     padding-top: 239px;
     font-size: 64px;
     font-weight: 700;
-    line-height: 92px;
+    line-height: 120%;
+    text-align: center;
   }
 
   &__list {
@@ -92,7 +93,9 @@
 
   &__content { min-width: 0; flex: 1 1 0; }
 
-  &__image {
+  &__image,
+  &__video {
+    display: block;
     width: 100%;
     height: 100%;
     max-width: none;
@@ -356,7 +359,6 @@
     }
     &__process-heading strong { font-size: 24px; line-height: 34px; }
     &__process-columns {
-      flex-direction: column;
       gap: 24px;
 
       &::after { display: none; }
@@ -365,6 +367,88 @@
     &__process-card strong { font-size: 19px; }
     &__process-card span { font-size: 15px; }
     &__process-complete { font-size: 18px; }
+  }
+}
+
+@media (max-width: 768px) {
+  .technologies {
+    &__process {
+      padding: 3.75rem 0 2.5rem;
+      overflow: hidden;
+    }
+
+    &__process-inner { gap: 1rem; }
+
+    &__process-start,
+    &__process-complete {
+      width: 53.3981%;
+      height: 2.75rem;
+    }
+
+    &__process-start {
+      gap: 0;
+
+      strong { font-size: 0.75rem; line-height: 1rem; }
+      span { font-size: 0.625rem; line-height: 0.875rem; }
+
+      &::after {
+        top: calc(100% - 0.125rem);
+        width: 0.25rem;
+        height: 1.125rem;
+      }
+    }
+
+    &__process-platform {
+      padding: 1rem 0.75rem;
+      gap: 0.75rem;
+      border-radius: 0.75rem;
+
+      &::after {
+        top: calc(100% - 0.125rem);
+        width: 0.25rem;
+        height: 1.125rem;
+      }
+    }
+
+    &__process-heading {
+      gap: 0;
+
+      strong { font-size: 0.75rem; line-height: 1rem; }
+      span { font-size: 0.625rem; line-height: 0.875rem; }
+    }
+
+    &__process-columns {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+
+    &__process-role {
+      height: 12.5rem;
+      padding: 0.75rem 0.5rem;
+      gap: 0.625rem;
+      border-radius: 0.625rem;
+
+      h4 { font-size: 0.6875rem; line-height: 1rem; }
+    }
+
+    &__process-card {
+      height: 4rem;
+      gap: 0.125rem;
+      border-radius: 0.5rem;
+
+      strong { font-size: 0.625rem; line-height: 0.875rem; }
+      span { font-size: 0.5625rem; line-height: 0.75rem; }
+
+      &:first-of-type::after {
+        width: 0.25rem;
+        height: 0.75rem;
+      }
+    }
+
+    &__process-complete {
+      font-size: 0.75rem;
+      line-height: 1rem;
+    }
   }
 }
 
