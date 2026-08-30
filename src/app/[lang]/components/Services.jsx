@@ -31,7 +31,7 @@ function Services({ dictionary }) {
   const desktopScrollExitRef = useRef(false)
   const desktopPinTriggerRef = useRef(null)
   const mobilePinTriggerRef = useRef(null)
-  const touchStartRef = useRef({ x: 0, y: 0 })
+  const touchStartRef = useRef({ x: 0, y: 0, active: false, handled: false })
   const mobileWheelDeltaRef = useRef(0)
   const mobileWheelLockedRef = useRef(false)
   const mobileSlideReadyRef = useRef(false)
@@ -244,27 +244,42 @@ function Services({ dictionary }) {
         mobilePinTriggerRef.current = null
         return
       }
-      touchStartRef.current = { x: event.clientX, y: event.clientY }
+      touchStartRef.current = { x: event.clientX, y: event.clientY, active: true, handled: false }
+      section.setPointerCapture?.(event.pointerId)
     }
 
-    const handlePointerUp = (event) => {
+    const handlePointerMove = (event) => {
       if (!event.isPrimary) return
       if (!isMobile() || !sectionIsPinned() || !mobileSlideReadyRef.current) return
       const swiper = swiperRef.current
+      const touchState = touchStartRef.current
+      if (!touchState.active || touchState.handled || !swiper || swiper.animating) return
+
       const deltaY = touchStartRef.current.y - event.clientY
       const deltaX = touchStartRef.current.x - event.clientX
-      if (!swiper || swiper.animating || Math.max(Math.abs(deltaX), Math.abs(deltaY)) < MOBILE_TOUCH_THRESHOLD) return
+      if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < MOBILE_TOUCH_THRESHOLD) return
 
       const forward = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY > 0 : deltaX > 0
       if (forward && swiper.activeIndex < serviceSlides.length - 1) swiper.slideNext()
       else if (!forward && swiper.activeIndex > 0) swiper.slidePrev()
+      touchStartRef.current = { ...touchState, active: false, handled: true }
+    }
+
+    const resetPointer = (event) => {
+      if (!event.isPrimary) return
+      touchStartRef.current = { x: 0, y: 0, active: false, handled: false }
+      if (section.hasPointerCapture?.(event.pointerId)) section.releasePointerCapture(event.pointerId)
     }
 
     section.addEventListener('pointerdown', handlePointerDown)
-    section.addEventListener('pointerup', handlePointerUp)
+    section.addEventListener('pointermove', handlePointerMove)
+    section.addEventListener('pointerup', resetPointer)
+    section.addEventListener('pointercancel', resetPointer)
     return () => {
       section.removeEventListener('pointerdown', handlePointerDown)
-      section.removeEventListener('pointerup', handlePointerUp)
+      section.removeEventListener('pointermove', handlePointerMove)
+      section.removeEventListener('pointerup', resetPointer)
+      section.removeEventListener('pointercancel', resetPointer)
     }
   }, [serviceSlides.length])
 
@@ -295,21 +310,30 @@ function Services({ dictionary }) {
         gsap.set(pagination, { opacity: 0 })
         mobileSlideReadyRef.current = false
 
-        gsap.timeline({
+        const mobileTimeline = gsap.timeline({
+          onComplete: () => {
+            mobileSlideReadyRef.current = true
+            updatePagination(swiperRef.current?.activeIndex || 0, 1)
+          },
+          onReverseComplete: () => {
+            mobileSlideReadyRef.current = false
+            updatePagination(swiperRef.current?.activeIndex || 0, 0)
+          },
           scrollTrigger: {
             trigger: section,
             start: 'top bottom',
             end: 'top top',
-            scrub: 1.7,
+            scrub: 2.4,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
-              const ready = self.progress >= 0.98
-              if (ready === mobileSlideReadyRef.current) return
-              mobileSlideReadyRef.current = ready
-              updatePagination(swiperRef.current?.activeIndex || 0, ready ? 1 : 0)
+              if (self.progress >= 0.98 || !mobileSlideReadyRef.current) return
+              mobileSlideReadyRef.current = false
+              updatePagination(swiperRef.current?.activeIndex || 0, 0)
             },
           },
         })
+
+        mobileTimeline
           .to(intro, { yPercent: -18, opacity: 0, duration: 0.2, ease: 'none' }, 0.5)
           .to(swiper, { clipPath: 'inset(0% 0 0 0)', duration: 0.45, ease: 'none' }, 0.55)
           .to(revealedContent, { opacity: 1, duration: 0.15, ease: 'none' }, 0.85)
