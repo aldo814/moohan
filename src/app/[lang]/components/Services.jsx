@@ -70,6 +70,9 @@ function Services({ dictionary }) {
         const pagination = section.querySelector(".services__pagination");
         const content = section.querySelectorAll(".services__inner");
         if (completed || context.conditions.reduce) {
+          // Completed/reduced-motion content uses its natural document height.
+          // Do not leave the sticky scroll runway behind after teardown.
+          track.style.removeProperty("height");
           gsap.set(swiperElement, { yPercent: 0, clipPath: "inset(0% 0 0 0)" });
           gsap.set(intro, { autoAlpha: 1, yPercent: 0 });
           gsap.set([content, pagination], { autoAlpha: 1 });
@@ -91,7 +94,11 @@ function Services({ dictionary }) {
           ((SLIDES_START + serviceSlides.length * SLIDE_SCROLL_DURATION) /
             (1.1 + serviceSlides.length * SLIDE_SCROLL_DURATION));
         const sizeTrack = () => {
-          gsap.set(track, { height: scrollDistance() + section.offsetHeight });
+          if (completionRef.current) return;
+          // refreshInit runs outside the GSAP matchMedia context. A gsap.set()
+          // here is not reliably reverted and can restore a stale runway height.
+          // Own this layout style explicitly, including its cleanup below.
+          track.style.height = `${scrollDistance() + section.offsetHeight}px`;
         };
         // Native sticky positioning avoids switching relative/fixed coordinates
         // while the browser's compositor is scrolling the introduction.
@@ -114,7 +121,7 @@ function Services({ dictionary }) {
               swiperRef.current?.slideTo(serviceSlides.length - 1, 0, false);
               updatePagination(serviceSlides.length - 1, 1);
               setActiveIndex(serviceSlides.length - 1);
-              // Capture the visible layout just before removing the pin spacer.
+              // Capture the visible layout just before removing the scroll runway.
               completionFrame = requestAnimationFrame(() => {
                 const next = section.closest(".about-services")?.nextElementSibling;
                 if (next) {
@@ -175,11 +182,15 @@ function Services({ dictionary }) {
         triggerRef.current = timeline.scrollTrigger;
         return () => {
           triggerRef.current = null;
+          track.style.removeProperty("height");
         };
       }
     );
     const refresh = () => {
-      ScrollTrigger.refresh();
+      // Completion only removes space below the remaining About trigger.
+      // A global refresh temporarily scrolls to 0; in Firefox this can leave
+      // a pending smooth scroll that runs after our position compensation.
+      if (!completed) ScrollTrigger.refresh();
       if (completed && completionRef.current) {
         completionRef.current = false;
         const anchor = exitAnchorRef.current;
@@ -189,6 +200,7 @@ function Services({ dictionary }) {
             behavior: "instant",
           });
           exitAnchorRef.current = null;
+          ScrollTrigger.update();
         }
       }
     };
