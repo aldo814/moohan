@@ -47,16 +47,18 @@ function Hero({ currentLocale, languageLabel, dictionary }) {
         <p className="hero__description"><DesignText text={hero.description} /></p>
       </div>
 
-      <a className="hero__scroll" href="#about" aria-label={hero.scrollDown}>
-        <span className="hero__scroll-label">{hero.scrollDown}</span>
-        <Image
-          className="hero__scroll-icon"
-          src={mouseIcon}
-          alt=""
-          width={17}
-          height={22}
-        />
-      </a>
+      <div className="hero__scroll-position">
+        <a className="hero__scroll" href="#about" aria-label={hero.scrollDown}>
+          <span className="hero__scroll-label">{hero.scrollDown}</span>
+          <Image
+            className="hero__scroll-icon"
+            src={mouseIcon}
+            alt=""
+            width={17}
+            height={22}
+          />
+        </a>
+      </div>
     </section>
   );
 }
