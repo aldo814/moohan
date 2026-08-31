@@ -16,7 +16,7 @@ import 'swiper/css'
 gsap.registerPlugin(ScrollTrigger)
 
 const serviceBackgrounds = [pctBackground, directFilingBackground, officeActionBackground, ipLitigationBackground]
-const INTRO_HOLD = 1.2
+const INTRO_HOLD = 0.4
 const SLIDES_START = INTRO_HOLD + 1.1
 const SLIDE_SCROLL_DURATION = 1.25
 const mobileQuery = '(max-width: 768px)'
