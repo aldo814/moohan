@@ -1,5 +1,6 @@
 'use client'
 
+import DesignText from '../../../components/common/DesignText'
 import Image from 'next/image'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
@@ -97,6 +98,7 @@ function AboutIntro({ dictionary }) {
           trigger: section,
           start: 'top top',
           end: '+=3600',
+          refreshPriority: 1,
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -142,7 +144,7 @@ function AboutIntro({ dictionary }) {
           <figure className="about-intro__visual about-intro__visual--three"><Image src={aboutImage03} alt="" width={812} height={601} /></figure>
           <figure className="about-intro__visual about-intro__visual--four"><Image src={aboutImage04} alt="" width={1072} height={611} /></figure>
         </div>
-        <p className="about-intro__description" ref={descriptionRef}>{dictionary.description}</p>
+        <p className="about-intro__description" ref={descriptionRef}><DesignText text={dictionary.description} /></p>
       </div>
     </section>
   )

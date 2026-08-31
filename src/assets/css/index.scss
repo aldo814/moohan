@@ -51,3 +51,13 @@ img {
 #root {
   min-height: 100svh;
 }
+
+.design-line-break { display: none; }
+.design-line-space { display: inline; }
+@media (min-width: 1920px) {
+  .design-line { white-space: nowrap; }
+}
+@media (min-width: 1600px) {
+  .design-line-break { display: initial; }
+  .design-line-space { display: none; }
+}

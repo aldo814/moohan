@@ -1,5 +1,6 @@
 'use client'
 
+import DesignText from '../../../components/common/DesignText'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 import contactDecoration from '../../../assets/images/main/bg_contact_decoration.svg'
@@ -54,7 +55,7 @@ function Contact({ dictionary }) {
 
     const invalidFile = files.find((file) => {
       const extension = file.name.split('.').pop()?.toLowerCase()
-      return !['jpg', 'jpeg', 'gif', 'pdf'].includes(extension) || file.size > 10 * 1024 * 1024
+      return !['jpg', 'jpeg', 'gif', 'docx', 'pptx', 'md', 'pdf'].includes(extension) || file.size > 10 * 1024 * 1024
     })
 
     if (invalidFile) {
@@ -123,7 +124,7 @@ function Contact({ dictionary }) {
       <div className="inner contact__inner">
         <div className="contact__intro">
           <h2 className="contact__title" id="contact-title">{dictionary.title}</h2>
-          <p className="contact__description">{dictionary.description}</p>
+          <p className="contact__description"><DesignText text={dictionary.description} /></p>
         </div>
 
         <form className="contact__form" onSubmit={handleSubmit} encType="multipart/form-data">
@@ -177,7 +178,7 @@ function Contact({ dictionary }) {
               ref={attachmentInputRef}
               type="file"
               name="attachments[]"
-              accept=".jpg,.jpeg,.gif,.pdf"
+              accept=".jpg,.jpeg,.gif,.docx,.pptx,.md,.pdf"
               multiple
               onChange={handleAttachmentChange}
             />

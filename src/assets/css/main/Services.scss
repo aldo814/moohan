@@ -165,12 +165,11 @@
     &__intro { display: none; }
 
     &__swiper {
-      transform: none !important;
-      will-change: auto;
+      will-change: transform;
       touch-action: none !important;
 
       .swiper-wrapper {
-        transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+        transition-timing-function: cubic-bezier(0.22, 0.72, 0.32, 1) !important;
       }
     }
 
@@ -257,7 +256,7 @@
 
     &__swiper {
       z-index: 11;
-      will-change: clip-path;
+      will-change: transform;
     }
 
     &__inner {
@@ -289,4 +288,35 @@
 
 @media (prefers-reduced-motion: reduce) {
   .services__intro { display: none; }
+}
+
+.services__swiper { touch-action: pan-y !important; }
+.services--completed .services__swiper { touch-action: pan-y !important; }
+.services--completed {
+  height: 200svh;
+  min-height: 200svh;
+
+  .services__intro { height: 100svh; }
+  .services__swiper { top: 100svh; height: 100svh; }
+}
+@media (max-width: 1024px) {
+  .services {
+    height: 100svh;
+    min-height: 100svh;
+  }
+  .services__intro-copy { padding-top: 25svh; }
+  .services__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4svh;
+    padding-block: 12svh;
+  }
+  .services__number,
+  .services__content { position: static; }
+  .services__content { width: 100%; }
+  .services--completed { height: 200svh; min-height: 200svh; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .services__intro { display: block; }
 }

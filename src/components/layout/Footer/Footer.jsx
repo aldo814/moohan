@@ -1,3 +1,4 @@
+import DesignText from '../../common/DesignText'
 import Image from 'next/image'
 import logo from '../../../assets/images/common/logo_moohan.svg'
 import logoSymbol from '../../../assets/images/common/logo_moohan_symbol.svg'
@@ -35,7 +36,7 @@ function Footer({ common, dictionary }) {
             </div>
             <div className="footer__info">
               <span className="footer__label">{dictionary.address}</span>
-              <address className="footer__value footer__value--address">{dictionary.addressValue}</address>
+              <address className="footer__value footer__value--address"><DesignText text={dictionary.addressValue} /></address>
             </div>
           </div>
 

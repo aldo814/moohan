@@ -1,5 +1,6 @@
 'use client'
 
+import DesignText from '../../../components/common/DesignText'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 import ruleBasedQaImage from '../../../assets/images/main/img_technology_rule_based_qa.png'
@@ -78,11 +79,12 @@ function Technologies({ dictionary }) {
         <div className="technologies__list" ref={listRef}>
           {technologies.map((technology, index) => (
             <article className={`technologies__item${index % 2 === 1 ? ' technologies__item--reverse' : ''}`} key={technology.title}>
-              <div className="technologies__image-wrap">
+              <div className={`technologies__image-wrap${!technology.video ? ' technologies__image-wrap--pending' : ''}`}>
                 {technology.video ? (
                   <video
                     className="technologies__video"
                     src={technology.video}
+                    controls
                     muted
                     loop
                     playsInline
@@ -92,10 +94,11 @@ function Technologies({ dictionary }) {
                 ) : (
                   <Image className="technologies__image" src={technology.image} alt="" width={technology.width} height={technology.height} />
                 )}
+                {!technology.video && <span className="technologies__pending" role="status">준비중</span>}
               </div>
               <div className="technologies__content">
                 <h3 className="technologies__item-title">{technology.title}</h3>
-                <p className="technologies__description">{technology.description}</p>
+                <p className="technologies__description"><DesignText text={technology.description} /></p>
               </div>
             </article>
           ))}

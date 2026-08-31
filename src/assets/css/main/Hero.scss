@@ -32,7 +32,9 @@
   &__content {
     z-index: 2;
     --inner-width: 1580px;
-    margin-top: 32.5926svh;
+    position: absolute;
+    top: 32.5926%;
+    margin: 0;
     text-align: center;
   }
 
@@ -43,11 +45,11 @@
     font-weight: 700;
     line-height: 84px;
     transform: translateY(32px);
-    animation: hero-copy-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
+    animation: hero-copy-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1) 1000ms forwards;
   }
 
   &__description {
-    width: 40%;
+    width: 70%;
     max-width: 768px;
     margin: 48px auto 0;
     opacity: 0;
@@ -55,7 +57,9 @@
     font-weight: 500;
     line-height: 32px;
     transform: translateY(24px);
-    animation: hero-copy-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1) 420ms forwards;
+    animation: hero-copy-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1) 1400ms forwards;
+    position: relative;
+    z-index: 55;
   }
 
   &__scroll {

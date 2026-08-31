@@ -1,3 +1,4 @@
+import DesignText from '../../../components/common/DesignText'
 import Image from "next/image";
 import Header from "../../../components/layout/Header/Header";
 import mouseIcon from "../../../assets/images/main/ico_mouse.svg";
@@ -43,7 +44,7 @@ function Hero({ currentLocale, languageLabel, dictionary }) {
           <br />
           {hero.titleLine2}
         </h1>
-        <p className="hero__description">{hero.description}</p>
+        <p className="hero__description"><DesignText text={hero.description} /></p>
       </div>
 
       <a className="hero__scroll" href="#about" aria-label={hero.scrollDown}>

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 
 const RECIPIENT_EMAIL = process.env.CONTACT_TO_EMAIL || '0sister16@gmail.com'
 const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024
-const ALLOWED_EXTENSIONS = new Set(['jpg', 'jpeg', 'gif', 'pdf'])
+const ALLOWED_EXTENSIONS = new Set(['jpg', 'jpeg', 'gif', 'docx', 'pptx', 'md', 'pdf'])
 
 function json(message: string, status: number, success = false) {
   return Response.json({ success, message }, { status })
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
   for (const attachment of attachments) {
     const extension = attachment.name.split('.').pop()?.toLowerCase() || ''
     if (!ALLOWED_EXTENSIONS.has(extension) || attachment.size > MAX_ATTACHMENT_SIZE) {
-      return json('Only JPG, JPEG, GIF, and PDF files up to 10 MB are allowed.', 422)
+      return json('Only JPG, JPEG, GIF, DOCX, PPTX, MD, and PDF files up to 10 MB are allowed.', 422)
     }
   }
 

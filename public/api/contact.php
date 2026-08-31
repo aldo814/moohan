@@ -84,6 +84,10 @@ if (isset($_FILES['attachments'])) {
         }
 
         $fileName = preg_replace('/[^A-Za-z0-9._-]/', '_', basename((string)$files['name'][$index]));
+        $extension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        if (!in_array($extension, ['jpg', 'jpeg', 'gif', 'docx', 'pptx', 'md', 'pdf'], true)) {
+            respond(422, false, 'Allowed files: JPG, GIF, DOCX, PPTX, MD, PDF (10 MB each).');
+        }
         $temporaryName = (string)$files['tmp_name'][$index];
         $mimeType = (new finfo(FILEINFO_MIME_TYPE))->file($temporaryName) ?: 'application/octet-stream';
         $fileContent = chunk_split(base64_encode((string)file_get_contents($temporaryName)));
