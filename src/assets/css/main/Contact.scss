@@ -209,7 +209,14 @@
   &__attachment-controls {
     display: flex;
     width: 100%;
+    cursor: pointer;
     gap: 8px;
+  }
+
+  &__attachment-controls:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid #f98d1e;
+    outline-offset: 3px;
   }
 
   &__attachment-status {
@@ -290,6 +297,97 @@
     outline-offset: 3px;
   }
 
+  &__agreements {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  &__agreement {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    background: #f9f9f9;
+    gap: 20px;
+  }
+
+  &__agreement-check {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+
+    input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    > span:last-child {
+      overflow: hidden;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 32px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    input:focus-visible + .contact__agreement-box {
+      outline: 2px solid #f98d1e;
+      outline-offset: 3px;
+    }
+
+    input:checked + .contact__agreement-box {
+      border-color: #f98d1e;
+      background: #f98d1e;
+
+      svg { opacity: 1; }
+    }
+  }
+
+  &__agreement-box {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    border: 1px solid #adadad;
+    border-radius: 4px;
+    background: #eaeaea;
+    color: $color-white;
+    place-items: center;
+
+    svg { width: 20px; height: 20px; opacity: 0; }
+  }
+
+  &__agreement-detail {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    flex: 0 0 auto;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 32px;
+    gap: 4px;
+
+    svg { width: 20px; height: 20px; }
+
+    &:focus-visible {
+      outline: 2px solid #f98d1e;
+      outline-offset: 4px;
+    }
+  }
+
   &__submit {
     display: flex;
     width: 220px;
@@ -305,6 +403,12 @@
     font-size: 24px;
     font-weight: 500;
     line-height: 36px;
+
+    &:disabled {
+      background: #dfdfdf;
+      color: #959595;
+      cursor: not-allowed;
+    }
   }
 
   &__feedback {
@@ -314,6 +418,75 @@
 
     &--success { color: #087a3e; }
     &--error { color: #c52c2c; }
+  }
+}
+
+.legal-modal {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  padding: 24px;
+  background: rgb(0 0 0 / 50%);
+  place-items: center;
+
+  &__dialog {
+    display: flex;
+    width: min(720px, 100%);
+    max-height: calc(100svh - 48px);
+    padding: 40px;
+    flex-direction: column;
+    border-radius: 16px;
+    background: $color-white;
+    box-shadow: 0 24px 80px rgb(0 0 0 / 18%);
+    outline: 0;
+    gap: 28px;
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f78d1d;
+
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 32px;
+    }
+
+    button {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      place-items: center;
+
+      svg { width: 20px; height: 20px; }
+
+      &:focus-visible {
+        outline: 2px solid #f98d1e;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &__content {
+    min-height: 360px;
+    overflow-y: auto;
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    white-space: pre-wrap;
+
+    p { margin: 0; }
+    p + p { margin-top: 16px; }
   }
 }
 
@@ -385,6 +558,21 @@
       width: 100px;
     }
 
+    &__agreements {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    &__agreement {
+      padding: 16px;
+    }
+
+    &__agreement-check > span:last-child,
+    &__agreement-detail {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
     &__row{
       flex-direction: column;
       gap: 2.5rem;
@@ -409,5 +597,18 @@
       margin-top: 3.75rem;
       gap: 2rem;
     }
+  }
+
+  .legal-modal {
+    padding: 16px;
+
+    &__dialog {
+      max-height: calc(100svh - 32px);
+      padding: 24px 20px;
+      border-radius: 12px;
+      gap: 20px;
+    }
+
+    &__content { min-height: 220px; }
   }
 }

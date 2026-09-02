@@ -2,7 +2,10 @@
 
 import DesignText from '../../../components/common/DesignText'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
+import { Check, ChevronRight } from 'lucide-react'
+import { getLegalContent } from '../../../content/legal-content'
+import LegalModal from './LegalModal'
 import contactDecoration from '../../../assets/images/main/bg_contact_decoration.svg'
 import contactUploadIcon from '../../../assets/images/main/ico_upload.svg'
 import contactRemoveIcon from '../../../assets/images/main/ico_close.svg'
@@ -16,7 +19,8 @@ const initialForm = {
   message: '',
 }
 
-function Contact({ dictionary }) {
+function Contact({ currentLocale, dictionary }) {
+  const isKorean = currentLocale === 'ko'
   const attachmentInputRef = useRef(null)
   const messageTextareaRef = useRef(null)
   const [form, setForm] = useState(initialForm)
@@ -24,6 +28,10 @@ function Contact({ dictionary }) {
   const [isDraggingAttachment, setIsDraggingAttachment] = useState(false)
   const [status, setStatus] = useState('idle')
   const [feedback, setFeedback] = useState('')
+  const [agreements, setAgreements] = useState({ privacyPolicy: false, termsOfService: false })
+  const [activeLegalDocument, setActiveLegalDocument] = useState(null)
+  const legalDocuments = getLegalContent(currentLocale)
+  const closeLegalModal = useCallback(() => setActiveLegalDocument(null), [])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -55,7 +63,7 @@ function Contact({ dictionary }) {
 
     const invalidFile = files.find((file) => {
       const extension = file.name.split('.').pop()?.toLowerCase()
-      return !['jpg', 'jpeg', 'gif', 'docx', 'pptx', 'md', 'pdf'].includes(extension) || file.size > 10 * 1024 * 1024
+      return !['jpg', 'jpeg', 'gif', 'docx', 'pptx', 'xlsx', 'pdf'].includes(extension) || file.size > 10 * 1024 * 1024
     })
 
     if (invalidFile) {
@@ -90,6 +98,7 @@ function Contact({ dictionary }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const formElement = event.currentTarget
+
     setStatus('sending')
     setFeedback('')
 
@@ -107,6 +116,7 @@ function Contact({ dictionary }) {
 
       setForm(initialForm)
       setAttachments([])
+      setAgreements({ privacyPolicy: false, termsOfService: false })
       if (attachmentInputRef.current) attachmentInputRef.current.value = ''
       if (messageTextareaRef.current) messageTextareaRef.current.style.height = '60px'
       formElement.reset()
@@ -178,7 +188,7 @@ function Contact({ dictionary }) {
               ref={attachmentInputRef}
               type="file"
               name="attachments[]"
-              accept=".jpg,.jpeg,.gif,.docx,.pptx,.md,.pdf"
+              accept=".jpg,.jpeg,.gif,.docx,.pptx,.xlsx,.pdf"
               multiple
               onChange={handleAttachmentChange}
             />
@@ -204,14 +214,24 @@ function Contact({ dictionary }) {
                 <p>{dictionary.uploadGuide}</p>
               </div>
             </label>
-            <div className="contact__attachment-controls">
+            <label
+              className="contact__attachment-controls"
+              htmlFor="contact-attachment"
+              role="button"
+              tabIndex="0"
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  attachmentInputRef.current?.click()
+                }
+              }}
+            >
               <div className="contact__attachment-status">
                 {attachments.length > 0
                   ? dictionary.selectedFiles.replace('{count}', String(attachments.length))
                   : dictionary.noFile}
               </div>
-              <label className="contact__attachment-button" htmlFor="contact-attachment">{dictionary.chooseFile}</label>
-            </div>
+            </label>
             <div className="contact__attachment-files" aria-live="polite">
               {attachments.map((attachment, index) => (
                 <div className="contact__attachment-file" key={`${attachment.name}-${attachment.size}-${attachment.lastModified}`}>
@@ -224,7 +244,35 @@ function Contact({ dictionary }) {
             </div>
           </div>
 
-          <button className="contact__submit" type="submit" disabled={status === 'sending'}>
+          {isKorean && (
+            <div className="contact__agreements">
+              {['privacyPolicy', 'termsOfService'].map((documentKey) => (
+                <div className="contact__agreement" key={documentKey}>
+                  <label className="contact__agreement-check">
+                    <input
+                      type="checkbox"
+                      checked={agreements[documentKey]}
+                      onChange={(event) => setAgreements((current) => ({ ...current, [documentKey]: event.target.checked }))}
+                    />
+                    <span className="contact__agreement-box" aria-hidden="true">
+                      <Check strokeWidth={3} />
+                    </span>
+                    <span>{dictionary[documentKey]}</span>
+                  </label>
+                  <button className="contact__agreement-detail" type="button" onClick={() => setActiveLegalDocument(documentKey)}>
+                    <span>{dictionary.viewDetails}</span>
+                    <ChevronRight aria-hidden="true" strokeWidth={1.5} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <button
+            className="contact__submit"
+            type="submit"
+            disabled={status === 'sending'}
+          >
             {status === 'sending' ? dictionary.sending : dictionary.submit}
           </button>
 
@@ -235,6 +283,15 @@ function Contact({ dictionary }) {
           )}
         </form>
       </div>
+      {isKorean && (
+        <LegalModal
+          isOpen={Boolean(activeLegalDocument)}
+          title={activeLegalDocument ? dictionary[activeLegalDocument] : ''}
+          content={activeLegalDocument ? legalDocuments[activeLegalDocument] : []}
+          closeLabel={dictionary.close}
+          onClose={closeLegalModal}
+        />
+      )}
     </section>
   )
 }
