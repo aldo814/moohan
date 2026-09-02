@@ -104,6 +104,7 @@ function Contact({ currentLocale, dictionary }) {
 
     const body = new FormData()
     Object.entries(form).forEach(([key, value]) => body.append(key, value))
+    body.append('lang', currentLocale)
     attachments.forEach((file) => body.append('attachments[]', file))
 
     try {

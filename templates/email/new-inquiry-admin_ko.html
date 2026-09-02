@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="x-apple-disable-message-reformatting">
-  <title>문의 접수 안내</title>
+  <title>새 문의 접수 안내</title>
 </head>
 <body style="margin:0; padding:0; background-color:#f3f3f3; font-family:Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; color:#333333;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; margin:0; padding:0; border-collapse:collapse; background-color:#f3f3f3;">
     <tr><td align="center" style="padding:0;">
       <table role="presentation" width="680" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:680px; border-collapse:collapse; background-color:#ffffff;">
-        <tr><td height="120" valign="top" background="https://mthome.hankyeul.com/images/email/admin_top.png" style="height:120px; padding:0 40px; background-color:#f98d1e; background-image:url('https://mthome.hankyeul.com/images/email/admin_top.png'); background-position:center top; background-repeat:no-repeat; background-size:100% 120px;">
+        <tr><td height="120" valign="top" background="https://mthome.hankyeul.com/images/email/admin_top.png" style="height:120px; padding:0 40px; background-color:#f98d1e; background-image:url('https://mthome.hankyeul.com/images/email/admin_top.png'); background-position:center top; background-repeat:no-repeat; background-size:680px 120px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse;"><tr><td height="76" valign="middle" style="height:76px; padding:0;">
             <img src="https://mthome.hankyeul.com/images/email/logo-admin.svg" width="134" height="28" alt="무한기술번역" style="display:block; width:134px; height:28px; margin:0; padding:0; border:0; outline:none; text-decoration:none;">
           </td></tr></table>
@@ -19,12 +19,26 @@
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse;">
             <tr><td style="padding:60px 40px 80px 40px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse;">
-                <tr><td style="padding:0; font-size:28px; line-height:40px; font-weight:500; color:#000000; word-break:keep-all;">안녕하세요, <span style="font-weight:700; color:#f98d1e;">{{name}}</span>님</td></tr>
-                <tr><td height="40" style="height:40px; padding:0; font-size:0; line-height:0;">&nbsp;</td></tr>
-                <tr><td style="padding:0; font-size:16px; line-height:24px; font-weight:400; color:#333333;">무한기술번역에 문의해 주셔서 감사합니다.<br>아래 내용으로 문의가 정상적으로 접수되었습니다.</td></tr>
+                <tr><td style="padding:0; font-size:28px; line-height:40px; font-weight:500; color:#000000; word-break:keep-all;">새로운 문의가 접수되었습니다.</td></tr>
                 <tr><td height="40" style="height:40px; padding:0; font-size:0; line-height:0;">&nbsp;</td></tr>
                 <tr><td style="padding:0; border-top:2px solid #000000;">
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                    <tr>
+                      <td width="148" valign="middle" style="width:148px; padding:20px; background-color:#f9f9f9; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:500; color:#000000;">성함</td>
+                      <td valign="middle" style="padding:12px 20px; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:400; color:#666666; word-break:break-word;">{{name}}</td>
+                    </tr>
+                    <tr>
+                      <td width="148" valign="middle" style="width:148px; padding:20px; background-color:#f9f9f9; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:500; color:#000000;">회사명</td>
+                      <td valign="middle" style="padding:12px 20px; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:400; color:#666666; word-break:break-word;">{{company}}</td>
+                    </tr>
+                    <tr>
+                      <td width="148" valign="middle" style="width:148px; padding:20px; background-color:#f9f9f9; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:500; color:#000000;">이메일</td>
+                      <td valign="middle" style="padding:12px 20px; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:400; color:#666666; word-break:break-all;">{{email}}</td>
+                    </tr>
+                    <tr>
+                      <td width="148" valign="middle" style="width:148px; padding:20px; background-color:#f9f9f9; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:500; color:#000000;">연락처</td>
+                      <td valign="middle" style="padding:12px 20px; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:400; color:#666666; word-break:break-word;">{{phone}}</td>
+                    </tr>
                     <tr>
                       <td width="148" valign="middle" style="width:148px; padding:20px; background-color:#f9f9f9; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:500; color:#000000;">문의 내용</td>
                       <td valign="middle" style="padding:12px 20px; border-bottom:1px solid #eaeaea; font-size:16px; line-height:24px; font-weight:400; color:#666666; word-break:break-word;">{{inquiry}}</td>
@@ -35,15 +49,11 @@
                     </tr>
                   </table>
                 </td></tr>
-                <tr><td height="24" style="height:24px; padding:0; font-size:0; line-height:0;">&nbsp;</td></tr>
-                <tr><td style="padding:0; font-size:14px; line-height:20px; font-weight:400; color:#666666;"><span style="display:inline-block; padding-right:8px; font-size:14px; line-height:20px; color:#666666;">&#8226;</span>담당자가 문의 내용을 검토한 후, 영업일 기준 1일 이내에 회신드리겠습니다.</td></tr>
               </table>
             </td></tr>
             <tr><td style="padding:32px 40px; background-color:#f9f9f9; border-top:1px solid #eaeaea;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse;">
-                <tr><td style="padding:0 0 8px 0; font-size:12px; line-height:16px; color:#666666;"><strong style="font-weight:700;">Address.</strong>&nbsp;&nbsp; 서울시 금천구 가산디지털2로 169-16, 518호(가산동, 하우스디가산퍼스타)</td></tr>
-                <tr><td style="padding:0 0 8px 0; font-size:12px; line-height:16px; color:#666666;"><strong style="font-weight:700;">Tel.</strong>&nbsp;&nbsp; 02-564-7789&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="font-weight:700;">Fax.</strong>&nbsp;&nbsp; 02-6442-0787</td></tr>
-                <tr><td style="padding:0; font-size:12px; line-height:16px; font-weight:400; color:#959595;">&copy;2026 MOOHAN Technical Translation Services Co., Ltd.</td></tr>
+                <tr><td style="padding:0; font-size:12px; line-height:16px; font-weight:400; color:#959595;">&copy;2026 MOOHAN Technical Translation Services Co., Ltd. All rights reserved.</td></tr>
               </table>
             </td></tr>
           </table>
