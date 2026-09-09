@@ -21,6 +21,7 @@ const initialForm = {
 
 function Contact({ currentLocale, dictionary }) {
   const isKorean = currentLocale === 'ko'
+  const usesSeparateLastName = currentLocale === 'en'
   const attachmentInputRef = useRef(null)
   const messageTextareaRef = useRef(null)
   const [form, setForm] = useState(initialForm)
@@ -99,6 +100,12 @@ function Contact({ currentLocale, dictionary }) {
     event.preventDefault()
     const formElement = event.currentTarget
 
+    if (isKorean && (!agreements.privacyPolicy || !agreements.termsOfService)) {
+      setStatus('error')
+      setFeedback(dictionary.agreementRequired)
+      return
+    }
+
     setStatus('sending')
     setFeedback('')
 
@@ -144,10 +151,12 @@ function Contact({ currentLocale, dictionary }) {
               <span>{dictionary.firstName}<b>*</b></span>
               <input name="firstName" value={form.firstName} onChange={handleChange} required autoComplete="given-name" placeholder=" " />
             </label>
-            <label className="contact__field">
-              <span>{dictionary.lastName}<b>*</b></span>
-              <input name="lastName" value={form.lastName} onChange={handleChange} required autoComplete="family-name" placeholder=" " />
-            </label>
+            {usesSeparateLastName && (
+              <label className="contact__field">
+                <span>{dictionary.lastName}<b>*</b></span>
+                <input name="lastName" value={form.lastName} onChange={handleChange} required autoComplete="family-name" placeholder=" " />
+              </label>
+            )}
           </div>
 
           <label className="contact__field">
@@ -272,7 +281,7 @@ function Contact({ currentLocale, dictionary }) {
           <button
             className="contact__submit"
             type="submit"
-            disabled={status === 'sending'}
+            disabled={status === 'sending' || (isKorean && (!agreements.privacyPolicy || !agreements.termsOfService))}
           >
             {status === 'sending' ? dictionary.sending : dictionary.submit}
           </button>

@@ -21,6 +21,8 @@
     --inner-width: 1580px;
     display: flex;
     gap: 8.8608%;
+    position: relative;
+    z-index:2
   }
 
   &__intro {
@@ -209,14 +211,7 @@
   &__attachment-controls {
     display: flex;
     width: 100%;
-    cursor: pointer;
     gap: 8px;
-  }
-
-  &__attachment-controls:focus-visible {
-    border-radius: 4px;
-    outline: 2px solid #f98d1e;
-    outline-offset: 3px;
   }
 
   &__attachment-status {
@@ -228,6 +223,7 @@
     flex: 1 1 0;
     overflow: hidden;
     border: 1px solid #dfdfdf;
+    background: #fff;
     border-radius: 4px;
     background: $color-white;
     color: #959595;

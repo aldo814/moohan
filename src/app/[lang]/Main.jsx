@@ -14,7 +14,7 @@ function Main({ currentLocale, languageLabel, dictionary }) {
         <Services dictionary={dictionary.home.services} />
       </div>
       <Technologies dictionary={dictionary.home.technologies} />
-      <Contact dictionary={dictionary.home.contact} />
+      <Contact currentLocale={currentLocale} dictionary={dictionary.home.contact} />
       <Footer common={dictionary.common} dictionary={dictionary.home.footer} />
     </main>
   )

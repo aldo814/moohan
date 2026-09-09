@@ -5,7 +5,7 @@ import path from 'node:path'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const RECIPIENT_EMAIL = process.env.CONTACT_TO_EMAIL || '0sister16@gmail.com'
+const RECIPIENT_EMAIL = process.env.CONTACT_TO_EMAIL || 'moohan@mttrans.co.kr'
 const SENDER_EMAIL = process.env.CONTACT_FROM_EMAIL || 'moohan@mttrans.co.kr'
 const ARCHIVE_EMAIL = process.env.CONTACT_BCC_EMAIL || 'moohan@mttrans.co.kr'
 const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024
@@ -20,14 +20,7 @@ const CUSTOMER_SUBJECTS: Record<Locale, string> = {
   ko: '[무한기술번역] 문의가 접수되었습니다',
   en: '[MOOHAN] Your Inquiry Has Been Received',
   ja: '[無限技術翻訳] お問い合わせを承りました',
-  zh: '[无限技术翻译]您的咨询已受理',
-}
-
-const ADMIN_SUBJECT_PREFIXES: Record<Locale, string> = {
-  ko: '신규 문의',
-  en: 'New Inquiry',
-  ja: '新規お問い合わせ',
-  zh: '新咨询',
+  zh: '[无限技术翻译] 您的咨询已受理',
 }
 
 function json(message: string, status: number, success = false) {
@@ -74,8 +67,7 @@ async function loadTemplate(kind: 'inquiry-received' | 'new-inquiry-admin', loca
 
 function localizedName(locale: Locale, firstName: string, lastName: string) {
   if (locale === 'en') return `${firstName} ${lastName}`
-  if (locale === 'zh') return `${lastName}${firstName}`
-  return `${lastName} ${firstName}`
+  return firstName
 }
 
 function buildMail({
@@ -164,7 +156,7 @@ export async function POST(request: Request) {
   const requestedLocale = String(formData.get('lang') || 'ko').toLowerCase()
   const locale: Locale = SUPPORTED_LOCALES.has(requestedLocale) ? requestedLocale as Locale : 'ko'
 
-  if (!firstName || !lastName || !email || !inquiry) return json('Please complete all required fields.', 422)
+  if (!firstName || (locale === 'en' && !lastName) || !email || !inquiry) return json('Please complete all required fields.', 422)
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json('Please enter a valid email address.', 422)
 
   const files = formData.getAll('attachments[]').filter((item): item is File => item instanceof File && item.size > 0)
@@ -205,11 +197,12 @@ export async function POST(request: Request) {
         bcc: ARCHIVE_EMAIL,
         subject: CUSTOMER_SUBJECTS[locale],
         html: customerHtml,
+        attachments,
       })),
       sendMail(buildMail({
         to: RECIPIENT_EMAIL,
         replyTo: email,
-        subject: `[${ADMIN_SUBJECT_PREFIXES[locale]}] ${cleanHeader(company || '-')}`,
+        subject: `[신규 문의] ${cleanHeader(company || '-')}`,
         html: adminHtml,
         attachments,
       })),

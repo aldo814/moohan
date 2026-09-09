@@ -1,7 +1,6 @@
 import DesignText from '../../common/DesignText'
 import Image from 'next/image'
-import logo from '../../../assets/images/common/logo_moohan.svg'
-import logoSymbol from '../../../assets/images/common/logo_moohan_symbol.svg'
+import logo from '../../../assets/images/common/logo_moohan_combined.svg'
 import footerTopIcon from '../../../assets/images/common/ico_arrow_top.svg'
 
 function Footer({ common, dictionary }) {
@@ -19,7 +18,6 @@ function Footer({ common, dictionary }) {
           <a className="footer__logo-link" href="#top" aria-label={common.homeLabel}>
             <span className="footer__logo" aria-hidden="true">
               <Image className="footer__logo-base" src={logo} alt="" width={164} height={34} />
-              <Image className="footer__logo-symbol" src={logoSymbol} alt="" width={50} height={25} />
             </span>
           </a>
 
@@ -32,7 +30,7 @@ function Footer({ common, dictionary }) {
           <div className="footer__info-column footer__info-column--primary">
             <div className="footer__info">
               <span className="footer__label">{dictionary.tel}</span>
-              <a className="footer__value footer__value--large" href="tel:+8225647789">+82-2-564-7789</a>
+              <a className="footer__value footer__value--large" href="tel:+8225647789">{dictionary.telValue || '+82-2-564-7789'}</a>
             </div>
             <div className="footer__info">
               <span className="footer__label">{dictionary.address}</span>
@@ -43,7 +41,7 @@ function Footer({ common, dictionary }) {
           <div className="footer__info-column footer__info-column--secondary">
             <div className="footer__info">
               <span className="footer__label">{dictionary.fax}</span>
-              <span className="footer__value footer__value--large">+82-2-6442-0787</span>
+              <span className="footer__value footer__value--large">{dictionary.faxValue || '+82-2-6442-0787'}</span>
             </div>
             <div className="footer__info">
               <span className="footer__label">{dictionary.contact}</span>

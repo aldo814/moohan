@@ -8,10 +8,10 @@ import nmtTranslationImage from '../../../assets/images/main/img_technology_nmt_
 import llmTranslationImage from '../../../assets/images/main/img_technology_llm_translation.png'
 import llmPostEditingImage from '../../../assets/images/main/img_technology_llm_post_editing.png'
 import cloudPlatformImage from '../../../assets/images/main/img_technology_cloud_platform.png'
-import qaVideo from '../../../assets/images/main/QA.webm'
-import nmtVideo from '../../../assets/images/main/AI_translation_NMT.webm'
-import llmTranslationVideo from '../../../assets/images/main/AI-translation_LLM.webm'
-import llmPostEditingVideo from '../../../assets/images/main/AI-PE.webm'
+import qaVideo from '../../../assets/images/main/technology-rule-based-qa.webm'
+import nmtVideo from '../../../assets/images/main/technology-nmt-machine-translation.webm'
+import llmTranslationVideo from '../../../assets/images/main/technology-llm-ai-translation.webm'
+import llmPostEditingVideo from '../../../assets/images/main/technology-llm-ai-post-editing.webm'
 
 const technologyImages = [
   { image: ruleBasedQaImage, video: qaVideo, width: 883, height: 717 },
@@ -94,7 +94,7 @@ function Technologies({ dictionary }) {
                 ) : (
                   <Image className="technologies__image" src={technology.image} alt="" width={technology.width} height={technology.height} />
                 )}
-                {!technology.video && <span className="technologies__pending" role="status">준비중</span>}
+                {!technology.video && <span className="technologies__pending" role="status">{dictionary.preparation}</span>}
               </div>
               <div className="technologies__content">
                 <h3 className="technologies__item-title">{technology.title}</h3>
